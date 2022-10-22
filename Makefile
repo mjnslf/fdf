@@ -1,41 +1,34 @@
 NAME = fdf
 
-SRC =  main.c read_file.c get_next_line.c ft_split.c get_next_line_utils.c drawing.c
-
-FLAGS = -Wall -Wextra -Werror
-
-INCLUDE = . libft minilibx_macos
-
-CPPFLAGS = $(addprefix -I,$(INCLUDE))
-
-CFLAGS = -Wall -Wextra -Werror
-
-export DEBUG_MODE
-
-ifdef DEBUG_MODE
-	CFLAGS += -g
-endif
-
-СС = gcc
+SRC = main.c \
+	drawing.c \
+	vec3d.c \
+	get_next_line.c \
+	tl_func.c \
+	tl_func1.c \
+	utils1.c \
+	utils2.c \
+	get_next_line_utils.c \
+	
+INCLUDE = . minilibx_macos
 
 OBJ = $(SRC:.c=.o)
 
-all: $(NAME)
+CFLAGS = -Wall -Wextra -Werror
 
-%.o: %.c
-	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
+all: $(NAME)
 
 $(NAME): $(OBJ)
 	$(MAKE) -C minilibx_macos
-	$(MAKE) -C libft
-	$(CC) -Llibft -L minilibx_macos $^ -lmlx -lft -framework OpenGL -framework AppKit -o $(NAME)
+	$(CC) -L minilibx_macos $^ -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+
+%.o: %.c
+	clang $(CFLAGS)  -c -o $@ $<
 
 clean:
-	$(MAKE) fclean -C libft
-	$(MAKE) clean -C minilibx_macos
-	rm -rf *.o
+	rm -f $(OBJ)
 
 fclean: clean
-	rm -rf $(NAME)
+	rm -f $(NAME)
 
 re: fclean all
