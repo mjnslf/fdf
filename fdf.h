@@ -5,7 +5,7 @@
 #include "minilibx_macos/mlx.h"
 //#include <stdio.h>
 #include <unistd.h>
-#include <stdlib.h> //for memory
+#include <stdlib.h>
 #include <string.h>
 //#include <assert.h>
 #include <fcntl.h> //read
