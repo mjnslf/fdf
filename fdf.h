@@ -1,42 +1,68 @@
 #ifndef FDF_H
 # define FDF_H
+# include "minilibx_macos/mlx.h"
+# include "get_next_line.h"
+# include <stdlib.h>
+# include <fcntl.h>
+# include <math.h>
+# include <unistd.h>
+# define  WIDTH 1460
+# define  HEIGHT 1080
 
-#include "libft/libft.h"
-#include "minilibx_macos/mlx.h"
-//#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-//#include <assert.h>
-#include <fcntl.h> //read
-
-typedef struct
+typedef struct s_point
 {
-    int width;
-    int height;
-    int **z_matrix;
-    int zoom;
-    int color;
-    int shift_x;
-    int shift_y;
-    
-    void    *mlx_ptr;
-    void    *win_ptr;
-}               data;
+	float				x;
+	float				y;
+	float				z;
+	int					rx;
+	int					ry;
+	int					i;
+	int					j;
+	int					k;
+}			t_point;
 
-void    read_file(char *file_name, data *data);
-char**  ft_split(char const *str, char separator);
-int     get_height(char *file_name);
-int     ft_wdcount(char const *s, char c);
-int     get_width(char *file_name);
-void    fill_matrix(int *z_line, char *line);
-void    read_file(char *file_name, data *data);
-int     keyboard(int key, data *data);
-int     get_next_line(int fd, char **line);
-void    draw_line(float x, float y, float x1, float y1, data *data);
-void    draw(data *data);
-void    vec3d(float *x, float *y, int z);
-int		mlx_destroy_window(void *mlx_ptr, void *win_ptr);
-int	rotate(float *x, float *y, int z);
+typedef struct s_fdf
+{
+	void				*mlx;
+	void				*win;
+	void				*img;
+	int					z_scale;
+	int					width;
+	int					height;
+	t_point				**points;
+	int					x_rasp;
+	int					y_rasp;
+	int					zoom;
+	int					map_w;
+	int					deltaerr;
+	int					step_x;
+	int					step_y;
+}						t_fdf;
+
+char			*ft_strnew(size_t size);
+char			**ft_split(char const *s, char c);
+int				ft_atoi(const char *str);
+size_t			gnl_strlen(const char *s);
+t_fdf			*param_init(int **map, int m_w);
+char			**read_file(int fd, int *i);
+void			vec3d(t_fdf *env);
+int				color(int z);
+void			x3d(t_fdf *e, t_point *p);
+void			y3d(t_fdf *e, t_point *p);
+void			drawing(t_fdf *env);
+void			mlx_img_clear(t_fdf *env);
+void			draw_line(t_fdf *env, t_point p1, t_point p2);
+void			next_str(char **str, char c);
+int				**matrix(char **map);
+int				num_count(char *str);
+t_point			**wid_mlx_to_map(int **map, int m_width);
+int				draw(t_fdf *fdf);
+int				*ft_read(char	*str);
+int				keyboard(int keycode, t_fdf *e);
+int				get_next_line(int fd, char **line);
+void			ft_bzero(void *s, size_t n);
+char			*ft_strcpy(char *dst, const char *src);
+void			mlx_pix_put(t_fdf *e, int x, int y, int clr);
+size_t			ft_strlcpy(char *dest, const char *src, size_t size);
 
 #endif

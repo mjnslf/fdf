@@ -4,8 +4,10 @@
 # include <fcntl.h>
 # include <stdlib.h>
 # include <unistd.h>
+# define BUFFER_SIZE 32
+# include "fdf.h"
 
-typedef struct	s_gnl
+typedef struct s_gnl
 {
 	int		a;
 	int		zero;
