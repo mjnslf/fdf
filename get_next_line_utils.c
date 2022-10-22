@@ -49,7 +49,7 @@ char	*gnl_strjoin(char const *s1, char const *s2)
 		return (0);
 	len1 = gnl_strlen((char *)s1);
 	len2 = gnl_strlen((char *)s2);
-	total = malloc(len1 + len2 + 1);
+	total = (char *)malloc(len1 + len2 + 1);
 	if (!total)
 		return (0);
 	gnl_memmove(total, s1, len1);
@@ -67,7 +67,7 @@ char	*gnl_strdup(char *str)
 	a = 0;
 	if (!str)
 		return (0);
-	total = malloc(sizeof(char) * (gnl_strlen(str) + 1));
+	total = (char *) malloc(sizeof(char) * (gnl_strlen(str) + 1));
 	if (total == NULL)
 		return (0);
 	while (str[a] != '\0' && str[a] != '\n')

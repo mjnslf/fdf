@@ -1,7 +1,5 @@
 #include "get_next_line.h"
 
-#define BUFFER_SIZE 30
-
 static int	line_check(char *str)
 {
 	int			a;
@@ -45,13 +43,14 @@ static char	*before_n(char *st_perem)
 	return (gnl.result);
 }
 
-int			get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
 	static char	*st_perem;
 	char		*buf;
 	int			readen_byte;
 
-	if (fd < 0 || !line || BUFFER_SIZE <= 0 || !(buf = malloc(BUFFER_SIZE + 1)))
+	buf = malloc(BUFFER_SIZE + 1);
+	if (fd < 0 || !line || BUFFER_SIZE <= 0 || !(buf))
 		return (-1);
 	readen_byte = 1;
 	while (readen_byte != 0 && !line_check(st_perem))
